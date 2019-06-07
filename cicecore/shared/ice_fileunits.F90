@@ -101,7 +101,7 @@
 
          nu_diag = ice_stdout  ! default
 
-         allocate(ice_IOUnitsInUse(ice_IOUnitsMaxUnit))
+         if (.not.allocated(ice_IOUnitsInUse)) allocate(ice_IOUnitsInUse(ice_IOUnitsMaxUnit))
          ice_IOUnitsInUse = .false.
          ice_IOUnitsInUse(ice_stdin)  = .true. ! reserve unit 5
          ice_IOUnitsInUse(ice_stdout) = .true. ! reserve unit 6

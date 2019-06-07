@@ -65,7 +65,7 @@
 #endif
 #endif  /* x86 */
 
-void ice_shr_reprosumx86_fix_start(unsigned short *old_cw) {
+void ice_shr_reprosumx86_fix_start_(unsigned short *old_cw) {
 #ifdef x86
   unsigned short new_cw;
 
@@ -75,7 +75,7 @@ void ice_shr_reprosumx86_fix_start(unsigned short *old_cw) {
 #endif
 }
 
-void ice_shr_reprosumx86_fix_end(unsigned short *old_cw) {
+void ice_shr_reprosumx86_fix_end_(unsigned short *old_cw) {
 #ifdef x86
   _FPU_SETCW(*old_cw);
 #endif

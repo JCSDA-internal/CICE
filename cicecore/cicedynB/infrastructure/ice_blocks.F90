@@ -157,10 +157,10 @@ contains
 !
 !----------------------------------------------------------------------
 
-   allocate(all_blocks(nblocks_tot))
-   allocate(i_global(nx_block,nblocks_tot), &
-            j_global(ny_block,nblocks_tot))
-   allocate(all_blocks_ij(nblocks_x,nblocks_y))
+   if (.not.allocated(all_blocks)) allocate(all_blocks(nblocks_tot))
+   if (.not.allocated(i_global)) allocate(i_global(nx_block,nblocks_tot))
+   if (.not.allocated(j_global)) allocate(j_global(ny_block,nblocks_tot))
+   if (.not.allocated(all_blocks_ij)) allocate(all_blocks_ij(nblocks_x,nblocks_y))
 
 !----------------------------------------------------------------------
 !

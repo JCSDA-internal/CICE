@@ -34,7 +34,7 @@
       private
       public :: init_grid1, init_grid2, &
                 t2ugrid_vector, u2tgrid_vector, &
-                to_ugrid, to_tgrid, alloc_grid
+                to_ugrid, to_tgrid, alloc_grid, dealloc_grid
 
       character (len=char_len_long), public :: &
          grid_format  , & ! file format ('bin'=binary or 'nc'=netcdf)
@@ -140,7 +140,7 @@
 !
       subroutine alloc_grid
 
-      integer (int_kind) :: ierr
+      integer (int_kind) :: ierr,ierr2
 
       allocate( &
          dxt      (nx_block,ny_block,max_blocks), & ! width of T-cell through the middle (m)
@@ -182,20 +182,74 @@
          umask    (nx_block,ny_block,max_blocks), & ! land/boundary mask, velocity (U-cell)
          lmask_n  (nx_block,ny_block,max_blocks), & ! northern hemisphere mask
          lmask_s  (nx_block,ny_block,max_blocks), & ! southern hemisphere mask
-         rndex_global(nx_block,ny_block,max_blocks), & ! global index for local subdomain (dbl)
+         rndex_global(nx_block,ny_block,max_blocks),stat=ierr2) !& ! global index for local subdomain (dbl)
+         allocate(&
          lont_bounds(4,nx_block,ny_block,max_blocks), & ! longitude of gridbox corners for T point
          latt_bounds(4,nx_block,ny_block,max_blocks), & ! latitude of gridbox corners for T point
          lonu_bounds(4,nx_block,ny_block,max_blocks), & ! longitude of gridbox corners for U point
          latu_bounds(4,nx_block,ny_block,max_blocks), & ! latitude of gridbox corners for U point       
-         mne  (2,2,nx_block,ny_block,max_blocks), & ! matrices used for coordinate transformations in remapping
-         mnw  (2,2,nx_block,ny_block,max_blocks), & ! ne = northeast corner, nw = northwest, etc.
-         mse  (2,2,nx_block,ny_block,max_blocks), &
-         msw  (2,2,nx_block,ny_block,max_blocks), &
+!         mne  (2,2,nx_block,ny_block,max_blocks), & ! matrices used for coordinate transformations in remapping
+!         mnw  (2,2,nx_block,ny_block,max_blocks), & ! ne = northeast corner, nw = northwest, etc.
+!         mse  (2,2,nx_block,ny_block,max_blocks), &
+!         msw  (2,2,nx_block,ny_block,max_blocks), &
          stat=ierr)
-      if (ierr/=0) call abort_ice('(alloc_grid): Out of memory')
+!     if (ierr/=0) call abort_ice('(alloc_grid): Out of memory')
 
       end subroutine alloc_grid
 
+      subroutine dealloc_grid
+
+      integer (int_kind) :: ierr
+
+      !if (allocated(dxt))
+      deallocate(dxt) 
+      deallocate(dyt) 
+      deallocate(dxu) 
+      deallocate(dyu) 
+      deallocate(HTE) 
+      deallocate(HTN) 
+      deallocate(tarea)
+      deallocate(uarea)
+      deallocate(tarear)
+      deallocate(uarear)
+      deallocate(tinyarea)
+      deallocate(tarean)
+      deallocate(tareas)
+      deallocate(ULON)
+      deallocate(ULAT)
+      deallocate(TLON)
+      deallocate(TLAT)
+      deallocate(ANGLE)
+      deallocate(ANGLET)
+      deallocate(bathymetry)
+      deallocate(ocn_gridcell_frac)
+      
+      deallocate(cyp) 
+      deallocate(cxp) 
+      deallocate(cym) 
+      deallocate(cxm) 
+      deallocate(dxhy) 
+      deallocate(dyhx) 
+      deallocate(xav) 
+      deallocate(yav) 
+      deallocate(xxav) 
+      deallocate(yyav)
+      
+      deallocate(hm) 
+      deallocate(bm) 
+      deallocate(uvm) 
+      deallocate(kmt)
+      deallocate(tmask) 
+      deallocate(umask) 
+      deallocate(lmask_n) 
+      deallocate(lmask_s)
+
+      deallocate(lont_bounds)
+      deallocate(latt_bounds)
+      deallocate(lonu_bounds)
+      deallocate(latu_bounds)
+         
+      end subroutine dealloc_grid
 !=======================================================================
 
 ! Distribute blocks across processors.  The distribution is optimized
