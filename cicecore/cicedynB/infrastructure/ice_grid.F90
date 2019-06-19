@@ -34,7 +34,7 @@
       private
       public :: init_grid1, init_grid2, &
                 t2ugrid_vector, u2tgrid_vector, &
-                to_ugrid, to_tgrid, alloc_grid, dealloc_grid
+                to_ugrid, to_tgrid, alloc_grid
 
       character (len=char_len_long), public :: &
          grid_format  , & ! file format ('bin'=binary or 'nc'=netcdf)
@@ -197,59 +197,6 @@
 
       end subroutine alloc_grid
 
-      subroutine dealloc_grid
-
-      integer (int_kind) :: ierr
-
-      !if (allocated(dxt))
-      deallocate(dxt) 
-      deallocate(dyt) 
-      deallocate(dxu) 
-      deallocate(dyu) 
-      deallocate(HTE) 
-      deallocate(HTN) 
-      deallocate(tarea)
-      deallocate(uarea)
-      deallocate(tarear)
-      deallocate(uarear)
-      deallocate(tinyarea)
-      deallocate(tarean)
-      deallocate(tareas)
-      deallocate(ULON)
-      deallocate(ULAT)
-      deallocate(TLON)
-      deallocate(TLAT)
-      deallocate(ANGLE)
-      deallocate(ANGLET)
-      deallocate(bathymetry)
-      deallocate(ocn_gridcell_frac)
-      
-      deallocate(cyp) 
-      deallocate(cxp) 
-      deallocate(cym) 
-      deallocate(cxm) 
-      deallocate(dxhy) 
-      deallocate(dyhx) 
-      deallocate(xav) 
-      deallocate(yav) 
-      deallocate(xxav) 
-      deallocate(yyav)
-      
-      deallocate(hm) 
-      deallocate(bm) 
-      deallocate(uvm) 
-      deallocate(kmt)
-      deallocate(tmask) 
-      deallocate(umask) 
-      deallocate(lmask_n) 
-      deallocate(lmask_s)
-
-      deallocate(lont_bounds)
-      deallocate(latt_bounds)
-      deallocate(lonu_bounds)
-      deallocate(latu_bounds)
-         
-      end subroutine dealloc_grid
 !=======================================================================
 
 ! Distribute blocks across processors.  The distribution is optimized

@@ -89,15 +89,15 @@
 !
 !-----------------------------------------------------------------------
 
-   type (block), dimension(:), allocatable :: &
+   type (block), dimension(:), allocatable,public :: &
       all_blocks         ! block information for all blocks in domain
 
-   integer (int_kind), dimension(:,:),allocatable :: &
+   integer (int_kind), dimension(:,:),allocatable,public :: &
       all_blocks_ij      ! block index stored in Cartesian order
                          !   useful for determining block index
                          !   of neighbor blocks
 
-   integer (int_kind), dimension(:,:), allocatable, target :: &
+   integer (int_kind), dimension(:,:), allocatable, target,public :: &
       i_global,         &! global i index for each point in each block
       j_global           ! global j index for each point in each block
 

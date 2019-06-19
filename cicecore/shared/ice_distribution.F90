@@ -708,6 +708,8 @@
       endif
    endif
 
+   nullify(newDistrb%blockCnt)
+   nullify(newDistrb%blockIndex)
 !----------------------------------------------------------------------
 
  end function create_distrb_cart
