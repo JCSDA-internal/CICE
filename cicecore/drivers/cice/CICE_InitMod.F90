@@ -24,7 +24,7 @@
 
       implicit none
       private
-      public :: CICE_Initialize, cice_init
+      public :: CICE_Initialize, cice_init, init_restart
 
 !=======================================================================
 
