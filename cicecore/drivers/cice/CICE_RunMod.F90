@@ -90,7 +90,7 @@
 
 #ifndef coupled
 #ifndef CESMCOUPLED
-         !jk  call get_forcing_atmo     ! atmospheric forcing from data
+         call get_forcing_atmo     ! atmospheric forcing from data
          call get_forcing_ocn(dt)  ! ocean forcing from data
 
          ! aerosols
@@ -189,9 +189,9 @@
       !-----------------------------------------------------------------
 
          call ice_timer_start(timer_diags)  ! diagnostics/history
-         !jk call init_mass_diags   ! diagnostics per timestep
-         !jk call init_history_therm
-         !jk call init_history_bgc
+         call init_mass_diags   ! diagnostics per timestep
+         call init_history_therm
+         call init_history_bgc
          call ice_timer_stop(timer_diags)   ! diagnostics/history
 
          call ice_timer_start(timer_column)  ! column physics
@@ -296,24 +296,24 @@
          call ice_timer_stop(timer_diags)   ! diagnostics
 
          call ice_timer_start(timer_hist)   ! history
-         !jk call accum_hist (dt)               ! history file
+         call accum_hist (dt)               ! history file
          call ice_timer_stop(timer_hist)    ! history
 
          call ice_timer_start(timer_readwrite)  ! reading/writing
          if (write_restart == 1) then
-            !jk call dumpfile     ! core variables for restarting
-            !jk if (tr_iage)      call write_restart_age
-            !jk if (tr_FY)        call write_restart_FY
-            !jk if (tr_lvl)       call write_restart_lvl
-            !jk if (tr_pond_cesm) call write_restart_pond_cesm
-            !jk if (tr_pond_lvl)  call write_restart_pond_lvl
-            !jk if (tr_pond_topo) call write_restart_pond_topo
-            !jk if (tr_aero)      call write_restart_aero
-            !jk if (solve_zsal .or. skl_bgc .or. z_tracers) &
-            !jk                   call write_restart_bgc 
-            !jk if (tr_brine)     call write_restart_hbrine
-            !jk if (kdyn == 2)    call write_restart_eap
-            !jk call final_restart
+            call dumpfile     ! core variables for restarting
+            if (tr_iage)      call write_restart_age
+            if (tr_FY)        call write_restart_FY
+            if (tr_lvl)       call write_restart_lvl
+            if (tr_pond_cesm) call write_restart_pond_cesm
+            if (tr_pond_lvl)  call write_restart_pond_lvl
+            if (tr_pond_topo) call write_restart_pond_topo
+            if (tr_aero)      call write_restart_aero
+            if (solve_zsal .or. skl_bgc .or. z_tracers) &
+                              call write_restart_bgc 
+            if (tr_brine)     call write_restart_hbrine
+            if (kdyn == 2)    call write_restart_eap
+            call final_restart
          endif
 
          call ice_timer_stop(timer_readwrite)  ! reading/writing
