@@ -23,7 +23,9 @@
       private
       public :: init_restart_write, init_restart_read, &
                 read_restart_field, write_restart_field, final_restart
-
+      
+      public :: define_rest_field
+      
       integer (kind=int_kind) :: ncid
 
 !=======================================================================
