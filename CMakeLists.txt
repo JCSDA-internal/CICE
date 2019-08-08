@@ -75,6 +75,7 @@ include_directories( ${NETCDF_INCLUDE_DIR} )
 ################################################################################
 # Export package info
 ################################################################################
+set( TAU_INCLUDE_DIRS /home/jkim/TAU/tau-2.28.2/include )
 
 set( CICE6_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/drivers/cice
      		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/shared
@@ -94,10 +95,9 @@ endforeach()
 ################################################################################
 # Sources
 ################################################################################
-
 include( cice6_compiler_flags )
 
-include_directories( ${CICE6_INCLUDE_DIRS} ${CICE6_EXTRA_INCLUDE_DIRS} )
+include_directories( ${CICE6_INCLUDE_DIRS} ${CICE6_EXTRA_INCLUDE_DIRS} ${TAU_INCLUDE_DIRS} )
 
 add_subdirectory( cicecore )
 
@@ -108,7 +108,7 @@ list( APPEND cice6_src_files
 ecbuild_add_library( TARGET   cice6
                      SOURCES  ${cice6_src_files}
                      LIBS     ${NETCDF_LIBRARIES} ${ICEPACK_LIBRARIES}
-                     INCLUDES 
+                     INCLUDES  ${TAU_INCLUDE_DIRS}
                      INSTALL_HEADERS LISTED
                      LINKER_LANGUAGE ${CICE6_LINKER_LANGUAGE}
                     )
@@ -119,8 +119,8 @@ set ( cice6_exe_files
 
 ecbuild_add_executable( TARGET   cice6.x
                         SOURCES  ${cice6_exe_files}
-                        LIBS     ${CICE6_LIBRARIES} ${ICEPACK_LIBRARIES}
-                        INCLUDES ${CICE6_INCLUDES}
+                        LIBS     ${CICE6_LIBRARIES} ${ICEPACK_LIBRARIES} $ENV{TAU_LIBS}
+                        INCLUDES ${CICE6_INCLUDES} ${TAU_INCLUDE_DIRS}
                         LINKER_LANGUAGE ${CICE6_LINKER_LANGUAGE}
                        )
 
