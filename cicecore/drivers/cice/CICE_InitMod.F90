@@ -213,7 +213,7 @@
 
 !=======================================================================
 
-      subroutine init_restart
+      subroutine init_restart(ice_ic_)
 
       use ice_arrays_column, only: dhsn
       use ice_blocks, only: nx_block, ny_block
@@ -240,6 +240,8 @@
       use ice_restart_shared, only: runtype, restart
       use ice_state ! almost everything
 
+      character(len=char_len_long), intent(in), optional :: ice_ic_
+
       integer(kind=int_kind) :: &
          i, j        , & ! horizontal indices
          iblk            ! block index
@@ -252,6 +254,7 @@
       integer(kind=int_kind) :: &
           nt_alvl, nt_vlvl, nt_apnd, nt_hpnd, nt_ipnd, &
           nt_iage, nt_FY, nt_aero
+      character(len=char_len_long) :: filename_ic
 
       character(len=*), parameter :: subname = '(init_restart)'
 
@@ -272,13 +275,19 @@
       if (icepack_warnings_aborted()) call abort_ice(error_message=subname, &
          file=__FILE__, line=__LINE__)
 
+      if (present(ice_ic_)) then 
+         filename_ic =trim(ice_ic_)
+      else
+         filename_ic =ice_ic
+      endif
+
       if (trim(runtype) == 'continue') then 
          ! start from core restart file
          call restartfile()           ! given by pointer in ice_in
          call calendar(time)          ! update time parameters
          if (kdyn == 2) call read_restart_eap ! EAP
       else if (restart) then          ! ice_ic = core restart file
-         call restartfile (ice_ic)    !  or 'default' or 'none'
+         call restartfile (filename_ic)    !  or 'default' or 'none'
          !!! uncomment to create netcdf
          ! call restartfile_v4 (ice_ic)  ! CICE v4.1 binary restart file
          !!! uncomment if EAP restart data exists
