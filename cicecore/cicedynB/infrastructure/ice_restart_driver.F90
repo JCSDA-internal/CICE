@@ -195,7 +195,7 @@
 ! Restarts from a dump
 ! author Elizabeth C. Hunke, LANL
 
-      subroutine restartfile (ice_ic)
+      subroutine restartfile (ice_ic,aicen_,hicen_)
 
       use ice_boundary, only: ice_HaloUpdate_stress
       use ice_blocks, only: nghost, nx_block, ny_block
@@ -217,7 +217,9 @@
           aice0, aicen, vicen, vsnon, trcrn, aice_init, uvel, vvel, &
           trcr_base, nt_strata, n_trcr_strata
 
-      character (*), optional :: ice_ic
+      character (*), optional, intent(in) :: ice_ic
+      real(kind=dbl_kind), optional, intent(in) :: aicen_(:,:,:,:)  !< Sea-ice fraction(nx_block,ny_block,ncat,max_blocks)
+      real(kind=dbl_kind), optional, intent(in) :: hicen_(:,:,:,:)  !< Sea-ice thickness(nx_block,ny_block,ncat,max_blocks)
 
       ! local variables
 
@@ -225,6 +227,8 @@
          i, j, k, iblk, &     ! counting indices
          ntrcr, &             ! number of tracers
          nt_Tsfc, nt_sice, nt_qice, nt_qsno
+      
+      integer (kind=int_kind) :: n, m
 
       logical (kind=log_kind) :: &
          diag
@@ -235,6 +239,8 @@
       character (len=3) :: nchar
 
       character(len=*), parameter :: subname = '(restartfile)'
+      
+      real (kind=dbl_kind)   :: puny = 1.0e-11
 
       call icepack_query_tracer_numbers(ntrcr_out=ntrcr)
       call icepack_warnings_flush(nu_diag)
@@ -259,10 +265,28 @@
       if (my_task == master_task) &
            write(nu_diag,*) ' min/max area, vol ice, vol snow, Tsfc'
 
-      call read_restart_field(nu_restart,0,aicen,'ruf8', &
+      if (present(aicen_)) then
+         aicen =aicen_
+      else
+         call read_restart_field(nu_restart,0,aicen,'ruf8', &
               'aicen',ncat,diag,field_loc_center, field_type_scalar)
-      call read_restart_field(nu_restart,0,vicen,'ruf8', &
+      endif
+      if (present(hicen_)) then
+         aicen =aicen_
+         do m=1,max_blocks
+            do n=1,ncat
+               do j=1,ny_block
+                  do i=1,nx_block
+                     if (aicen(i,j,n,m).gt.puny) &
+                          vicen(i,j,n,m) = hicen_(i,j,n,m)*aicen(i,j,n,m)
+                  enddo
+               enddo
+            enddo
+         enddo
+      else
+         call read_restart_field(nu_restart,0,vicen,'ruf8', &
               'vicen',ncat,diag,field_loc_center, field_type_scalar)
+      endif
       call read_restart_field(nu_restart,0,vsnon,'ruf8', &
               'vsnon',ncat,diag,field_loc_center, field_type_scalar)
       call read_restart_field(nu_restart,0,trcrn(:,:,nt_Tsfc,:,:),'ruf8', &
