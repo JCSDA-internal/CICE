@@ -214,16 +214,6 @@
 
       character(len=*), parameter :: subname = '(step_therm1)'
 
-#ifdef use_TAU
-      integer profiler(2) / 0, 0 /
-      save    profiler
-#endif
-    
-#ifdef use_TAU
-      call TAU_PROFILE_TIMER(profiler, 'step_therm1()')
-      call TAU_PROFILE_START(profiler)
-#endif
-    
       call icepack_query_parameters(puny_out=puny)
       call icepack_query_parameters(calc_Tsfc_out=calc_Tsfc)
       call icepack_query_tracer_numbers(ntrcr_out=ntrcr)
@@ -389,10 +379,6 @@
       if (icepack_warnings_aborted()) call abort_ice(error_message=subname, &
          file=__FILE__, line=__LINE__)
 
-#ifdef use_TAU
-      call TAU_PROFILE_STOP(profiler)
-#endif
-
       end subroutine step_therm1
 
 !=======================================================================
@@ -441,16 +427,6 @@
          this_block      ! block information for current block
 
       character(len=*), parameter :: subname = '(step_therm2)'
-
-#ifdef use_TAU
-      integer profiler(2) / 0, 0 /
-      save    profiler
-#endif
-    
-#ifdef use_TAU
-      call TAU_PROFILE_TIMER(profiler, 'step_therm2()')
-      call TAU_PROFILE_START(profiler)
-#endif
 
       call icepack_query_parameters(z_tracers_out=z_tracers)
       call icepack_query_tracer_numbers(ntrcr_out=ntrcr, nbtrcr_out=nbtrcr)
@@ -510,10 +486,6 @@
       if (icepack_warnings_aborted()) call abort_ice(error_message=subname, &
            file=__FILE__, line=__LINE__)
       
-#ifdef use_TAU
-      call TAU_PROFILE_STOP(profiler)
-#endif
-
       end subroutine step_therm2
 
 !=======================================================================
