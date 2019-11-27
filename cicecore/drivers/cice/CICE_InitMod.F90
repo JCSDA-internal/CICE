@@ -213,7 +213,7 @@
 
 !=======================================================================
 
-      subroutine init_restart(ice_ic_,aicen_,hicen_)
+      subroutine init_restart(ice_ic_,aicen_,hicen_,hsnon_)
 
       use ice_arrays_column, only: dhsn
       use ice_blocks, only: nx_block, ny_block
@@ -243,7 +243,8 @@
       character(len=char_len_long),  optional, intent(in):: ice_ic_
       real(kind=dbl_kind), optional, intent(in) :: aicen_(:,:,:,:)  !< Sea-ice fraction(nx_block,ny_block,ncat,max_blocks)
       real(kind=dbl_kind), optional, intent(in) :: hicen_(:,:,:,:)  !< Sea-ice thickness(nx_block,ny_block,ncat,max_blocks)
-
+      real(kind=dbl_kind), optional, intent(in) :: hsnon_(:,:,:,:)  !< Sea-ice thickness(nx_block,ny_block,ncat,max_blocks)        
+          
       integer(kind=int_kind) :: &
          i, j        , & ! horizontal indices
          iblk            ! block index
@@ -289,7 +290,7 @@
          call calendar(time)          ! update time parameters
          if (kdyn == 2) call read_restart_eap ! EAP
       else if (restart) then          ! ice_ic = core restart file
-         call restartfile (filename_ic,aicen_,hicen_)    !  or 'default' or 'none'
+         call restartfile (filename_ic,aicen_,hicen_,hsnon_)    !  or 'default' or 'none'
          !!! uncomment to create netcdf
          ! call restartfile_v4 (ice_ic)  ! CICE v4.1 binary restart file
          !!! uncomment if EAP restart data exists
