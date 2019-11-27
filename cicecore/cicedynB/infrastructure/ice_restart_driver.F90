@@ -292,7 +292,7 @@
          aicen =aicen_
          do m=1,max_blocks
             do n=1,ncat
-                      do j=1,ny_block
+               do j=1,ny_block
                   do i=1,nx_block
                      if (aicen(i,j,n,m).gt.puny) &
                           vsnon(i,j,n,m) = hsnon_(i,j,n,m)*aicen(i,j,n,m)
