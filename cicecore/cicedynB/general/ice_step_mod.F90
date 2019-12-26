@@ -283,7 +283,8 @@
             enddo
          endif ! tr_aero
 
-         if (tmask(i,j,iblk)) &
+!jk Added more if-condition options to avoid blowup issues at therm1 call--------
+         if (tmask(i,j,iblk).and.rhoa(i,j,iblk).ne.0..and.potT(i,j,iblk).ne.0.) &
          call icepack_step_therm1(dt, ncat, nilyr, nslyr, n_aero,                &
                             aicen_init  (i,j,:,iblk),                           &
                             vicen_init  (i,j,:,iblk), vsnon_init  (i,j,:,iblk), &
