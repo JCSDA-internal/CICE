@@ -195,7 +195,7 @@
 ! Restarts from a dump
 ! author Elizabeth C. Hunke, LANL
 
-      subroutine restartfile (ice_ic,aicen_,hicen_)
+      subroutine restartfile (ice_ic,aicen_,hicen_,hsnon_)
 
       use ice_boundary, only: ice_HaloUpdate_stress
       use ice_blocks, only: nghost, nx_block, ny_block
@@ -220,6 +220,7 @@
       character (*), optional, intent(in) :: ice_ic
       real(kind=dbl_kind), optional, intent(in) :: aicen_(:,:,:,:)  !< Sea-ice fraction(nx_block,ny_block,ncat,max_blocks)
       real(kind=dbl_kind), optional, intent(in) :: hicen_(:,:,:,:)  !< Sea-ice thickness(nx_block,ny_block,ncat,max_blocks)
+      real(kind=dbl_kind), optional, intent(in) :: hsnon_(:,:,:,:)  !< Snow thickness(nx_block,ny_block,ncat,max_blocks)                  
 
       ! local variables
 
@@ -287,8 +288,23 @@
          call read_restart_field(nu_restart,0,vicen,'ruf8', &
               'vicen',ncat,diag,field_loc_center, field_type_scalar)
       endif
-      call read_restart_field(nu_restart,0,vsnon,'ruf8', &
+      if (present(hsnon_)) then
+         aicen =aicen_
+         do m=1,max_blocks
+            do n=1,ncat
+               do j=1,ny_block
+                  do i=1,nx_block
+                     if (aicen(i,j,n,m).gt.puny) &
+                          vsnon(i,j,n,m) = hsnon_(i,j,n,m)*aicen(i,j,n,m)
+                  enddo
+               enddo
+            enddo
+         enddo
+      else
+         call read_restart_field(nu_restart,0,vsnon,'ruf8', &
               'vsnon',ncat,diag,field_loc_center, field_type_scalar)
+      endif
+
       call read_restart_field(nu_restart,0,trcrn(:,:,nt_Tsfc,:,:),'ruf8', &
               'Tsfcn',ncat,diag,field_loc_center, field_type_scalar)
 
