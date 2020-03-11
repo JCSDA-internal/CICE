@@ -971,9 +971,10 @@
                                                        psnoice(2)
         write(nu_diag,900) 'snow change (m)        = ',pdsnow(1), &
                                                        pdsnow(2)
-        write(nu_diag,900) 'effective dhi (m)      = ',pdhi(1),pdhi(2)
-        write(nu_diag,900) 'effective dhs (m)      = ',pdhs(1),pdhs(2)
-        write(nu_diag,900) 'intnl enrgy chng(W/m^2)= ',pde (1),pde (2)
+!jk Different resolutions seems to show NANvalues -----------------------
+!jk        write(nu_diag,900) 'effective dhi (m)      = ',pdhi(1),pdhi(2)
+!jk        write(nu_diag,900) 'effective dhs (m)      = ',pdhs(1),pdhs(2)
+!jk        write(nu_diag,900) 'intnl enrgy chng(W/m^2)= ',pde (1),pde (2)
         write(nu_diag,*) '----------ocn----------'
         write(nu_diag,900) 'sst (C)                = ',psst(1),psst(2)
         write(nu_diag,900) 'sss (ppt)              = ',psss(1),psss(2)

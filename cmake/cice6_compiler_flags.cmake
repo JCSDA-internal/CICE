@@ -2,15 +2,9 @@
 #
 # This software is licensed under the terms of the Apache Licence Version 2.0
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
-set(TAU_FLAG "$ENV{TAU_LIBS}")
-if(TAU_FLAG)
-    set(TAU_CPP "-Duse_TAU")
-else()
-    set(TAU_CPP "")
-endif()
 
 #add_definitions ( -Duse_libMPI -Duse_netCDF -DSPMD -DNXGLOB=4)
-add_definitions ( -Duse_libMPI -Duse_netCDF -Dncdf -Dgather_scatter_barrier ${TAU_CPP})
+add_definitions ( -Duse_libMPI -Duse_netCDF -Dncdf -Dgather_scatter_barrier)
 
 #######################################################################################
 # Fortran
