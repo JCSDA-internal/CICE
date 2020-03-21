@@ -9,7 +9,7 @@ cicecore/cicedynB/general/ice_step_mod.F90
 cicecore/cicedynB/general/ice_flux.F90
 cicecore/cicedynB/general/ice_forcing.F90
 cicecore/cicedynB/general/ice_state.F90
-cicecore/cicedynB/infrastructure/ice_shr_reprosum86.c
+#jkim cicecore/cicedynB/infrastructure/ice_shr_reprosum86.c
 cicecore/cicedynB/infrastructure/comm/mpi/ice_boundary.F90
 cicecore/cicedynB/infrastructure/comm/mpi/ice_broadcast.F90
 cicecore/cicedynB/infrastructure/comm/mpi/ice_communicate.F90
@@ -40,6 +40,7 @@ cicecore/cicedynB/analysis/ice_history.F90
 cicecore/cicedynB/analysis/ice_history_mechred.F90
 cicecore/cicedynB/analysis/ice_history_pond.F90
 cicecore/cicedynB/analysis/ice_history_shared.F90
+cicecore/cicedynB/analysis/ice_history_fsd.F90
 cicecore/shared/ice_arrays_column.F90
 cicecore/shared/ice_calendar.F90
 cicecore/shared/ice_constants.F90

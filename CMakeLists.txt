@@ -9,7 +9,7 @@
 
 cmake_minimum_required( VERSION 3.3.2 FATAL_ERROR )
 
-project( cice6 Fortran )
+project( cice6 C Fortran )
 
 set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH} )
 
@@ -78,7 +78,10 @@ include_directories( ${NETCDF_INCLUDE_DIRS} )
 
 set( CICE6_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/drivers/cice
      		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/shared
-     		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/cicedynB/infrastructure
+     		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/cicedynB/analysis
+		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/cicedynB/dynamics
+		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/cicedynB/general
+		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/cicedynB/infrastructure
                        ${CMAKE_Fortran_MODULE_DIRECTORY} )
 set( CICE6_LIBRARIES cice6 )
 
