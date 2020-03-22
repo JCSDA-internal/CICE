@@ -1,7 +1,7 @@
 list ( APPEND _files
-cicecore/drivers/cice/CICE_InitMod.F90
-cicecore/drivers/cice/CICE_RunMod.F90
-cicecore/drivers/cice/CICE_FinalMod.F90
+cicecore/drivers/standalone/cice/CICE_InitMod.F90
+cicecore/drivers/standalone/cice/CICE_RunMod.F90
+cicecore/drivers/standalone/cice/CICE_FinalMod.F90
 cicecore/cicedynB/general/ice_flux_bgc.F90
 cicecore/cicedynB/general/ice_forcing_bgc.F90
 cicecore/cicedynB/general/ice_init.F90
