@@ -115,7 +115,7 @@ ecbuild_add_library( TARGET   cice6
                     )
 
 set ( cice6_exe_files
-    cicecore/drivers/cice/CICE.F90
+    cicecore/drivers/standalone/cice/CICE.F90
 )
 
 ecbuild_add_executable( TARGET   cice6.x
