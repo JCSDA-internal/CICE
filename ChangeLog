@@ -1,0 +1,306 @@
+diff -r cicecore/cicedynB/dynamics/ice_transport_driver.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/dynamics/ice_transport_driver.F90
+47c47
+<       integer (kind=int_kind), dimension(:), allocatable, public ::             &
+---
+>       integer (kind=int_kind), dimension(:), allocatable ::             &
+51c51
+<       logical (kind=log_kind), dimension (:), allocatable, public ::             &
+---
+>       logical (kind=log_kind), dimension (:), allocatable ::             &
+diff -r cicecore/cicedynB/general/ice_forcing_bgc.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/general/ice_forcing_bgc.F90
+37c37
+<       real (kind=dbl_kind), dimension(:,:,:), allocatable, public :: &
+---
+>       real (kind=dbl_kind), dimension(:,:,:), allocatable :: &
+41c41
+<       real (kind=dbl_kind), dimension(:,:,:,:), allocatable, public, save :: &
+---
+>       real (kind=dbl_kind), dimension(:,:,:,:), allocatable, save :: &
+diff -r cicecore/cicedynB/general/ice_forcing.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/general/ice_forcing.F90
+75c75
+<       character (char_len_long), dimension(:), allocatable, public :: &  ! input data file names
+---
+>       character (char_len_long), dimension(:), allocatable :: &  ! input data file names
+87c87
+<       real (kind=dbl_kind), dimension(:,:,:), allocatable, public :: &
+---
+>       real (kind=dbl_kind), dimension(:,:,:), allocatable :: &
+90c90
+<       real (kind=dbl_kind), dimension(:,:,:,:), allocatable, public :: &
+---
+>       real (kind=dbl_kind), dimension(:,:,:,:), allocatable :: &
+111c111
+<            dimension(:,:,:,:,:), allocatable, public :: &
+---
+>            dimension(:,:,:,:,:), allocatable :: &
+145c145
+<        dimension (:,:,:,:,:), allocatable, public :: &
+---
+>        dimension (:,:,:,:,:), allocatable :: &
+diff -r cicecore/cicedynB/infrastructure/comm/mpi/ice_boundary.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/infrastructure/comm/mpi/ice_boundary.F90
+104c104
+<    integer (int_kind), public :: &
+---
+>    integer (int_kind) :: &
+108c108
+<    integer (int_kind), dimension(:,:), allocatable, public :: &
+---
+>    integer (int_kind), dimension(:,:), allocatable :: &
+112c112
+<    real (real_kind), dimension(:,:), allocatable, public :: &
+---
+>    real (real_kind), dimension(:,:), allocatable :: &
+116c116
+<    real (dbl_kind), dimension(:,:), allocatable, public :: &
+---
+>    real (dbl_kind), dimension(:,:), allocatable :: &
+126c126
+<    integer (int_kind), dimension(:,:), allocatable, public :: &
+---
+>    integer (int_kind), dimension(:,:), allocatable :: &
+129c129
+<    real (real_kind), dimension(:,:), allocatable, public :: &
+---
+>    real (real_kind), dimension(:,:), allocatable :: &
+132c132
+<    real (dbl_kind), dimension(:,:), allocatable, public :: &
+---
+>    real (dbl_kind), dimension(:,:), allocatable :: &
+diff -r cicecore/cicedynB/infrastructure/comm/mpi/ice_reprosum.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/infrastructure/comm/mpi/ice_reprosum.F90
+1352c1352
+< !jkim      call ice_shr_reprosumx86_fix_start (old_cw)
+---
+>       call ice_shr_reprosumx86_fix_start (old_cw)
+1392c1392
+< !jkim      call ice_shr_reprosumx86_fix_end (old_cw)
+---
+>       call ice_shr_reprosumx86_fix_end (old_cw)
+diff -r cicecore/cicedynB/infrastructure/comm/serial/ice_reprosum.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/infrastructure/comm/serial/ice_reprosum.F90
+1353c1353
+< !jkim      call ice_shr_reprosumx86_fix_start (old_cw)
+---
+>       call ice_shr_reprosumx86_fix_start (old_cw)
+1393c1393
+< !jkim      call ice_shr_reprosumx86_fix_end (old_cw)
+---
+>       call ice_shr_reprosumx86_fix_end (old_cw)
+diff -r cicecore/cicedynB/infrastructure/ice_blocks.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/infrastructure/ice_blocks.F90
+92c92
+<    type (block), dimension(:), allocatable,public :: &
+---
+>    type (block), dimension(:), allocatable :: &
+95c95
+<    integer (int_kind), dimension(:,:),allocatable,public :: &
+---
+>    integer (int_kind), dimension(:,:),allocatable :: &
+100c100
+<    integer (int_kind), dimension(:,:), allocatable, target,public :: &
+---
+>    integer (int_kind), dimension(:,:), allocatable, target :: &
+160,163c160,163
+<    if (.not.allocated(all_blocks)) allocate(all_blocks(nblocks_tot))
+<    if (.not.allocated(i_global)) allocate(i_global(nx_block,nblocks_tot))
+<    if (.not.allocated(j_global)) allocate(j_global(ny_block,nblocks_tot))
+<    if (.not.allocated(all_blocks_ij)) allocate(all_blocks_ij(nblocks_x,nblocks_y))
+---
+>    allocate(all_blocks(nblocks_tot))
+>    allocate(i_global(nx_block,nblocks_tot), &
+>             j_global(ny_block,nblocks_tot))
+>    allocate(all_blocks_ij(nblocks_x,nblocks_y))
+diff -r cicecore/cicedynB/infrastructure/ice_grid.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/infrastructure/ice_grid.F90
+146c146
+<       integer (int_kind) :: ierr,ierr2
+---
+>       integer (int_kind) :: ierr
+188,189c188
+<          rndex_global(nx_block,ny_block,max_blocks),stat=ierr2) !& ! global index for local subdomain (dbl)
+<          allocate(&
+---
+>          rndex_global(nx_block,ny_block,max_blocks), & ! global index for local subdomain (dbl)
+194,197c193,196
+< !         mne  (2,2,nx_block,ny_block,max_blocks), & ! matrices used for coordinate transformations in remapping
+< !         mnw  (2,2,nx_block,ny_block,max_blocks), & ! ne = northeast corner, nw = northwest, etc.
+< !         mse  (2,2,nx_block,ny_block,max_blocks), &
+< !         msw  (2,2,nx_block,ny_block,max_blocks), &
+---
+>          mne  (2,2,nx_block,ny_block,max_blocks), & ! matrices used for coordinate transformations in remapping
+>          mnw  (2,2,nx_block,ny_block,max_blocks), & ! ne = northeast corner, nw = northwest, etc.
+>          mse  (2,2,nx_block,ny_block,max_blocks), &
+>          msw  (2,2,nx_block,ny_block,max_blocks), &
+199c198
+< !     if (ierr/=0) call abort_ice('(alloc_grid): Out of memory')
+---
+>       if (ierr/=0) call abort_ice('(alloc_grid): Out of memory')
+diff -r cicecore/cicedynB/infrastructure/ice_restart_driver.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/infrastructure/ice_restart_driver.F90
+198c198
+<       subroutine restartfile (ice_ic,aicen_,hicen_,hsnon_)
+---
+>       subroutine restartfile (ice_ic)
+220,223c220
+<       character (*), optional, intent(in) :: ice_ic
+<       real(kind=dbl_kind), optional, intent(in) :: aicen_(:,:,:,:)  !< Sea-ice fraction(nx_block,ny_block,ncat,max_blocks)
+<       real(kind=dbl_kind), optional, intent(in) :: hicen_(:,:,:,:)  !< Sea-ice thickness(nx_block,ny_block,ncat,max_blocks)
+<       real(kind=dbl_kind), optional, intent(in) :: hsnon_(:,:,:,:)  !< Snow thickness(nx_block,ny_block,ncat,max_blocks)                  
+---
+>       character (*), optional :: ice_ic
+231,232d227
+<       
+<       integer (kind=int_kind) :: n, m
+243,244d237
+<       
+<       real (kind=dbl_kind)   :: puny = 1.0e-11
+269,272c262
+<       if (present(aicen_)) then
+<          aicen =aicen_
+<       else
+<          call read_restart_field(nu_restart,0,aicen,'ruf8', &
+---
+>       call read_restart_field(nu_restart,0,aicen,'ruf8', &
+274,288c264
+<       endif
+<       if (present(hicen_)) then
+<          aicen =aicen_
+<          do m=1,max_blocks
+<             do n=1,ncat
+<                do j=1,ny_block
+<                   do i=1,nx_block
+<                      if (aicen(i,j,n,m).gt.puny) &
+<                           vicen(i,j,n,m) = hicen_(i,j,n,m)*aicen(i,j,n,m)
+<                   enddo
+<                enddo
+<             enddo
+<          enddo
+<       else
+<          call read_restart_field(nu_restart,0,vicen,'ruf8', &
+---
+>       call read_restart_field(nu_restart,0,vicen,'ruf8', &
+290,304c266
+<       endif
+<       if (present(hsnon_)) then
+<          aicen =aicen_
+<          do m=1,max_blocks
+<             do n=1,ncat
+<                do j=1,ny_block
+<                   do i=1,nx_block
+<                      if (aicen(i,j,n,m).gt.puny) &
+<                           vsnon(i,j,n,m) = hsnon_(i,j,n,m)*aicen(i,j,n,m)
+<                   enddo
+<                enddo
+<             enddo
+<          enddo
+<       else
+<          call read_restart_field(nu_restart,0,vsnon,'ruf8', &
+---
+>       call read_restart_field(nu_restart,0,vsnon,'ruf8', &
+306,307d267
+<       endif
+< 
+diff -r cicecore/cicedynB/infrastructure/ice_restoring.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/infrastructure/ice_restoring.F90
+35c35
+<       real (kind=dbl_kind), dimension (:,:,:,:), allocatable, public :: &
+---
+>       real (kind=dbl_kind), dimension (:,:,:,:), allocatable :: &
+40c40
+<       real (kind=dbl_kind), dimension (:,:,:,:,:), allocatable, public :: &
+---
+>       real (kind=dbl_kind), dimension (:,:,:,:,:), allocatable :: &
+diff -r cicecore/cicedynB/infrastructure/io/io_netcdf/ice_restart.F90 ../../CICE-CICE6.1.0/cicecore/cicedynB/infrastructure/io/io_netcdf/ice_restart.F90
+27,28d26
+<       public :: define_rest_field
+<       
+Only in cicecore/: CMakeLists.txt
+diff -r cicecore/drivers/standalone/cice/CICE_InitMod.F90 ../../CICE-CICE6.1.0/cicecore/drivers/standalone/cice/CICE_InitMod.F90
+28c28
+<       public :: CICE_Initialize, cice_init, init_restart
+---
+>       public :: CICE_Initialize, cice_init
+234c234
+<       subroutine init_restart(ice_ic_,aicen_,hicen_,hsnon_)
+---
+>       subroutine init_restart
+262,266d261
+<       character(len=char_len_long),  optional, intent(in):: ice_ic_
+<       real(kind=dbl_kind), optional, intent(in) :: aicen_(:,:,:,:)  !< Sea-ice fraction(nx_block,ny_block,ncat,max_blocks)
+<       real(kind=dbl_kind), optional, intent(in) :: hicen_(:,:,:,:)  !< Sea-ice thickness(nx_block,ny_block,ncat,max_blocks)
+<       real(kind=dbl_kind), optional, intent(in) :: hsnon_(:,:,:,:)  !< Sea-ice thickness(nx_block,ny_block,ncat,max_blocks)        
+<           
+279d273
+<       character(len=char_len_long) :: filename_ic
+301,306d294
+<       if (present(ice_ic_)) then 
+<          filename_ic =trim(ice_ic_)
+<       else
+<          filename_ic =ice_ic
+<       endif
+< 
+313c301
+<          call restartfile (filename_ic,aicen_,hicen_,hsnon_)    !  or 'default' or 'none'
+---
+>          call restartfile (ice_ic)    !  or 'default' or 'none'
+diff -r cicecore/drivers/standalone/cice/CICE_RunMod.F90_debug ../../CICE-CICE6.1.0/cicecore/drivers/standalone/cice/CICE_RunMod.F90_debug
+47c47,48
+<       use ice_forcing, only: get_forcing_atmo, get_forcing_ocn, atm_data_type
+---
+>       use ice_forcing, only: get_forcing_atmo, get_forcing_ocn, &
+>           get_wave_spec
+54c55
+<           tr_aero, tr_zaero, skl_bgc, z_tracers
+---
+>           tr_aero, tr_zaero, skl_bgc, z_tracers, wave_spec, tr_fsd
+63,64c64,69
+<       call icepack_query_parameters(skl_bgc_out=skl_bgc, z_tracers_out=z_tracers)
+<       call icepack_query_tracer_flags(tr_aero_out=tr_aero, tr_zaero_out=tr_zaero)
+---
+>       call icepack_query_parameters(skl_bgc_out=skl_bgc, &
+>                                     z_tracers_out=z_tracers, &
+>                                     wave_spec_out=wave_spec)
+>       call icepack_query_tracer_flags(tr_aero_out=tr_aero, &
+>                                       tr_zaero_out=tr_zaero, &
+>                                       tr_fsd_out=tr_fsd)
+92a98,99
+> ! for now, wave_spectrum is constant in time
+> !         if (tr_fsd .and. wave_spec) call get_wave_spec ! wave spectrum in ice
+146c153
+<           write_restart_pond_topo, write_restart_aero, &
+---
+>           write_restart_pond_topo, write_restart_aero, write_restart_fsd, &
+152c159
+<           biogeochemistry, save_init
+---
+>           biogeochemistry, save_init, step_dyn_wave
+166c173
+<           tr_iage, tr_FY, tr_lvl, &
+---
+>           tr_iage, tr_FY, tr_lvl, tr_fsd, &
+168c175
+<           calc_Tsfc, skl_bgc, solve_zsal, z_tracers
+---
+>           calc_Tsfc, skl_bgc, solve_zsal, z_tracers, wave_spec
+180c187,188
+<            solve_zsal_out=solve_zsal, z_tracers_out=z_tracers, ktherm_out=ktherm)
+---
+>            solve_zsal_out=solve_zsal, z_tracers_out=z_tracers, ktherm_out=ktherm, &
+>            wave_spec_out=wave_spec)
+183c191,192
+<            tr_pond_topo_out=tr_pond_topo, tr_brine_out=tr_brine, tr_aero_out=tr_aero)
+---
+>            tr_pond_topo_out=tr_pond_topo, tr_brine_out=tr_brine, tr_aero_out=tr_aero, &
+>            tr_fsd_out=tr_fsd)
+257a267,270
+>          ! wave fracture of the floe size distribution
+>          ! note this is called outside of the dynamics subcycling loop
+>          if (tr_fsd .and. wave_spec) call step_dyn_wave(dt)
+> 
+290a304
+> !MHRI: CHECK THIS OMP
+344a359
+>             if (tr_fsd)       call write_restart_fsd
+diff -r cicecore/shared/ice_distribution.F90 ../../CICE-CICE6.1.0/cicecore/shared/ice_distribution.F90
+711,712d710
+<    nullify(newDistrb%blockCnt)
+<    nullify(newDistrb%blockIndex)
+diff -r cicecore/shared/ice_fileunits.F90 ../../CICE-CICE6.1.0/cicecore/shared/ice_fileunits.F90
+109c109
+<          if (.not.allocated(ice_IOUnitsInUse)) allocate(ice_IOUnitsInUse(ice_IOUnitsMaxUnit))
+---
+>          allocate(ice_IOUnitsInUse(ice_IOUnitsMaxUnit))

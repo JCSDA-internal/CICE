@@ -60,7 +60,7 @@ MODULE ice_reprosum
 !- include statements --------------------------------------------------
 !-----------------------------------------------------------------------
 #ifndef SERIAL_REMOVE_MPI
-#include <mpif.h>
+include 'mpif.h'
 #endif
 
 !-----------------------------------------------------------------------
@@ -1349,7 +1349,7 @@ MODULE ice_reprosum
 
 !-----------------------------------------------------------------------
 
-      call ice_shr_reprosumx86_fix_start (old_cw)
+!jkim      call ice_shr_reprosumx86_fix_start (old_cw)
 
       if (first_time) then
 #ifdef SERIAL_REMOVE_MPI
@@ -1389,7 +1389,7 @@ MODULE ice_reprosum
          arr_gsum(ifld) = real(arr_gsum_dd(ifld))
       enddo
 
-      call ice_shr_reprosumx86_fix_end (old_cw)
+!jkim      call ice_shr_reprosumx86_fix_end (old_cw)
 
    end subroutine ice_reprosum_ddpdd
 
