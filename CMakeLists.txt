@@ -9,9 +9,10 @@
 
 cmake_minimum_required( VERSION 3.3.2 FATAL_ERROR )
 
-project( cice6 C Fortran )
+project( cice6 VERSION 6.1.0 LANGUAGES C Fortran )
 
 set( CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake;${CMAKE_MODULE_PATH} )
+set( CMAKE_DIRECTORY_LABELS "cice6")
 
 set( ECBUILD_DEFAULT_BUILD_TYPE Release )
 set( ENABLE_OS_TESTS           OFF CACHE BOOL "Disable OS tests" FORCE )
@@ -36,8 +37,6 @@ set( CICE6_LINKER_LANGUAGE Fortran )
 # Dependencies
 ################################################################################
 
-# LAPACK
-
 # MPI
 ecbuild_add_option( FEATURE MPI DEFAULT ON
                     DESCRIPTION "Support for MPI distributed parallelism"
@@ -58,15 +57,9 @@ set( NETCDF_F90 ON CACHE BOOL "Compile with Fortran NetCDF" )
 find_package( NetCDF REQUIRED COMPONENTS Fortran )
 include_directories( ${NETCDF_INCLUDE_DIRS} )
 
-# fms
-
-# cvmix
-
-# gsw
-
-# geoKdTree
-
-# cice6_da_hooks
+# icepack
+ecbuild_use_package( PROJECT icepack REQUIRED)
+include_directories( ${ICEPACK_INCLUDE_DIRS})
 
 ################################################################################
 # Definitions
@@ -76,13 +69,7 @@ include_directories( ${NETCDF_INCLUDE_DIRS} )
 # Export package info
 ################################################################################
 
-set( CICE6_INCLUDE_DIRS ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/drivers/cice
-     		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/shared
-     		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/cicedynB/analysis
-		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/cicedynB/dynamics
-		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/cicedynB/general
-		       ${CMAKE_CURRENT_SOURCE_DIR}/cicecore/cicedynB/infrastructure
-                       ${CMAKE_Fortran_MODULE_DIRECTORY} )
+set( CICE6_INCLUDE_DIRS ${CMAKE_Fortran_MODULE_DIRECTORY} )
 set( CICE6_LIBRARIES cice6 )
 
 get_directory_property( CICE6_DEFINITIONS COMPILE_DEFINITIONS )
@@ -107,6 +94,15 @@ list( APPEND cice6_src_files
     ${cicecore_files}
 )
 
+if (ECBUILD_INSTALL_FORTRAN_MODULES)
+  install (DIRECTORY ${CMAKE_Fortran_MODULE_DIRECTORY}/${CMAKE_CFG_INTDIR}
+    DESTINATION ${INSTALL_INCLUDE_DIR} )
+endif()
+
+################################################################################
+# Library
+################################################################################
+
 ecbuild_add_library( TARGET   cice6
                      SOURCES  ${cice6_src_files}
                      LIBS     ${NETCDF_LIBRARIES} ${ICEPACK_LIBRARIES}
@@ -114,6 +110,9 @@ ecbuild_add_library( TARGET   cice6
                      LINKER_LANGUAGE ${CICE6_LINKER_LANGUAGE}
                     )
 
+################################################################################
+# executable
+################################################################################
 set ( cice6_exe_files
     cicecore/drivers/standalone/cice/CICE.F90
 )
