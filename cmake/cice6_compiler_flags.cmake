@@ -4,7 +4,7 @@
 # which can be obtained at http://www.apache.org/licenses/LICENSE-2.0.
 
 #add_definitions ( -Duse_libMPI -Duse_netCDF -DSPMD -DNXGLOB=4)
-add_definitions ( -Duse_libMPI -Duse_netCDF -Dncdf -Dgather_scatter_barrier)
+add_definitions ( -Duse_libMPI -Duse_netCDF -Dncdf -Dgather_scatter_barrier -DNAMING=_ADD_UNDERSCORE )
 
 #######################################################################################
 # Fortran

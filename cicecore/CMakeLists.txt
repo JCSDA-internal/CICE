@@ -27,6 +27,7 @@ cicecore/cicedynB/infrastructure/ice_blocks.F90
 cicecore/cicedynB/infrastructure/ice_grid.F90
 cicecore/cicedynB/infrastructure/ice_restart_driver.F90
 cicecore/cicedynB/infrastructure/ice_memusage.F90
+cicecore/cicedynB/infrastructure/ice_memusage_gptl.c
 cicecore/cicedynB/dynamics/ice_dyn_eap.F90
 cicecore/cicedynB/dynamics/ice_dyn_evp_1d.F90
 cicecore/cicedynB/dynamics/ice_dyn_evp.F90
