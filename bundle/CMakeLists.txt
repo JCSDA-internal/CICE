@@ -20,7 +20,7 @@ include( jedicmake/cmake/Functions/git_functions.cmake  )
 
 # required repositories
 
-ecbuild_bundle( PROJECT icepack            GIT "https://github.com/jcsda-internal/oops.git"         UPDATE BRANCH feature/ecbuild-new )
+ecbuild_bundle( PROJECT icepack GIT "https://github.com/jcsda-internal/icepack.git" UPDATE BRANCH feature/ecbuild-new )
 ecbuild_bundle( PROJECT cice6            SOURCE "../" )
 
 ecbuild_bundle_finalize()
