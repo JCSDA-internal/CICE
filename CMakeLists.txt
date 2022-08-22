@@ -32,6 +32,7 @@ find_package(icepack 1.2.0 REQUIRED)
 set( CICE6_LINKER_LANGUAGE Fortran)
 
 add_subdirectory( cicecore )
+add_subdirectory( test )
 
 list( APPEND cice6_src_files
     ${cicecore_files}
